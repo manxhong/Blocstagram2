@@ -15,4 +15,6 @@
 //@property (nonatomic, strong) UIImageView *mediaImageView;
 //@property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 //@property (nonatomic, strong) UILabel * commentLabel;
+
+//New comment from mentor
 @end
