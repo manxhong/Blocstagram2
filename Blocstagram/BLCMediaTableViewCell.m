@@ -138,7 +138,7 @@ static NSParagraphStyle *paragraphStyle;
         self.usernameAndCaptionLabel = [[UILabel alloc]init];
         self.commentLabel = [[UILabel alloc]init];
         self.commentLabel.numberOfLines = 0;
-        
+            
         for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel]) {
             [self.contentView addSubview:view];
             view.translatesAutoresizingMaskIntoConstraints = NO;
