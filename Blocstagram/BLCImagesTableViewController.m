@@ -33,6 +33,9 @@
     [super viewDidLoad];
     
     [[BLCDataSource sharedInstance] addObserver:self forKeyPath:@"mediaItems" options:0 context:nil];
+    
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
 //    for (int i=1; i <= 10; i++) {
 //        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
 //        UIImage*image = [UIImage imageNamed:imageName];
@@ -49,9 +52,27 @@
     [self.tableView registerClass:[BLCMediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
 }
 
+-(void) refreshControlDidFire:(UIRefreshControl *)sender {
+    [[BLCDataSource sharedInstance] requestNewItemWithCompletionHandler:^(NSError *error){
+        [sender endRefreshing];
+    }];
+}
 -(void) dealloc
 {
     [[BLCDataSource sharedInstance] removeObserver:self forKeyPath:@"mediaItems"];
+}
+
+-(void) infiniteScollIfNecessary {
+    NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
+    
+    if (bottomIndexPath && bottomIndexPath.row == [BLCDataSource sharedInstance].mediaItems.count -1) {
+        
+        [[BLCDataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self infiniteScollIfNecessary];
 }
 
 - (void)didReceiveMemoryWarning {

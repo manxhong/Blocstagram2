@@ -9,11 +9,15 @@
 #import <Foundation/Foundation.h>
 @class BLCMedia;
 
+typedef void (^BLCNewItemCompletionBlcok)(NSError *error);
 @interface BLCDataSource : NSObject
 
 +(instancetype) sharedInstance;
-@property (nonatomic, strong) NSArray *mediaItems;
+@property (nonatomic, strong, readonly) NSArray *mediaItems;
 
 -(void) deleteMediaItem:(BLCMedia *)item;
 
+-(void) requestNewItemWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler;
+
+-(void) requestOldItemsWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler;
 @end
