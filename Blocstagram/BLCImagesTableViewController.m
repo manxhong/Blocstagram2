@@ -37,7 +37,7 @@
     self.refreshControl = [[UIRefreshControl alloc]init];
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
 //    for (int i=1; i <= 10; i++) {
-//        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
+//        NSString *imageName = [NSString stringWitx    hFormat:@"%d.jpg", i];
 //        UIImage*image = [UIImage imageNamed:imageName];
 //        if (image) {
 //            [self.images addObject:image];
@@ -71,8 +71,14 @@
     }
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    [self infiniteScollIfNecessary];
+//    NSLog(@"we are scrolling");
+//}
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
     [self infiniteScollIfNecessary];
+    NSLog(@"we are scrolling");
 }
 
 - (void)didReceiveMemoryWarning {

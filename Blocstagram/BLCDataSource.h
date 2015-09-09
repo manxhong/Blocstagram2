@@ -12,8 +12,10 @@
 typedef void (^BLCNewItemCompletionBlcok)(NSError *error);
 @interface BLCDataSource : NSObject
 
++(NSString *) instagramClientID;
 +(instancetype) sharedInstance;
 @property (nonatomic, strong, readonly) NSArray *mediaItems;
+@property (nonatomic, strong, readonly) NSString *accessToken;
 
 -(void) deleteMediaItem:(BLCMedia *)item;
 
