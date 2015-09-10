@@ -85,7 +85,7 @@
 }
 
 +(NSString *) instagramClientID{
-    return @"<4b9d4f57194c40d5817d03b996d0ffee>";
+    return @"4b9d4f57194c40d5817d03b996d0ffee";
 }
 
 -(void) requestNewItemWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler{

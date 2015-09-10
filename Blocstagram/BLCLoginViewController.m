@@ -17,7 +17,7 @@
 
 @implementation BLCLoginViewController
 
-NSString *const BLCLoingViewControllerDidGetAccessTokenNotification = @"BLCLoginViewControllerDidGetAccessTokenNotification";
+NSString *const BLCLoginViewControllerDidGetAccessTokenNotification = @"BLCLoginViewControllerDidGetAccessTokenNotification";
 
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString *urlString = request.URL.absoluteString;
@@ -30,6 +30,10 @@ NSString *const BLCLoingViewControllerDidGetAccessTokenNotification = @"BLCLogin
         return NO;
     }
     return YES;
+}
+
+- (void) navigateWebViewBack:(id)sender {
+    [self.webView goBack];
 }
 
 -(NSString *)redirectURI{
@@ -46,6 +50,8 @@ NSString *const BLCLoingViewControllerDidGetAccessTokenNotification = @"BLCLogin
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = NSLocalizedString(@"Login", @"Login");
+    //[self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0,-18)];
     
     NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [BLCDataSource instagramClientID], [self redirectURI]];
     NSURL *url = [NSURL URLWithString:urlString];

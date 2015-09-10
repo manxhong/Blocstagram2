@@ -12,4 +12,6 @@
 
 extern NSString *const BLCLoginViewControllerDidGetAccessTokenNotification;
 
+- (void) navigateWebViewBack:(id)sender;
+
 @end
