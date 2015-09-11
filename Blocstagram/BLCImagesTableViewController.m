@@ -109,14 +109,22 @@
     return cell;
 }
 
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UIImage *image = self.images[indexPath.row];
-    BLCMedia *item = [self items][indexPath.row];
+    BLCMedia *item = [BLCDataSource sharedInstance].mediaItems[indexPath.row];
+    if (item.image) {
+        return 350;
+    } else {
+        return 150;
+    }
+}
+
+    //    UIImage *image = self.images[indexPath.row];
+//    BLCMedia *item = [self items][indexPath.row];
  //   UIImage *image = item.image;
   //  return (CGRectGetWidth(self.view.frame)/image.size.width) *image.size.height;
   //  return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
-    return [BLCMediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
-}
+//    return [BLCMediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
 
 //-(BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     

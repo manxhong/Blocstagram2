@@ -23,42 +23,45 @@
 @property (nonatomic, assign) BOOL isRefreshing;
 
 @property (nonatomic, assign) BOOL isLoadingOlderItems;
+
+@property (nonatomic, assign) BOOL thereAreNoMoreOlderMessages;
 @end
 
 @implementation BLCDataSource
 #pragma - Key/Value Observing
 
 -(void) requestOldItemsWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler {
-    if (self.isLoadingOlderItems == NO) {
+    if (self.isLoadingOlderItems == NO && self.thereAreNoMoreOlderMessages ==NO) {
         self.isLoadingOlderItems = YES;
-/*        BLCMedia *media = [[BLCMedia alloc] init];
-        media.user= [self randomUser];
-        media.image = [UIImage imageNamed:@"1.jpg"];
-        media.caption = [self randomStringOfLength:7];
         
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO addObject:media];*/
+        NSString *maxID = [[self.mediaItems lastObject] idNumber];
+        NSDictionary *parameters = @{@"max_id": maxID};
         
-        self.isLoadingOlderItems = NO;
-        
-        if (completionHandler) {
-            completionHandler(nil);
-        }
+        [self populateDataWithParameters:parameters completionHandler:^(NSError *error) {
+            self.isLoadingOlderItems = NO;
+            
+            if (completionHandler) {
+                completionHandler(error);
+            }
+        }];
     }
+
+    
+    
 }
 
--(void) populateDataWithParameters:(NSDictionary *)parameters {
+-(void) populateDataWithParameters:(NSDictionary *)parameters completionHandler:(BLCNewItemCompletionBlcok)completionHandler{
     if (self.accessToken) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
-            NSMutableString *urlString =[NSMutableString stringWithFormat:@"http://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"http://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
             
             for (NSString *parameterName in parameters) {
                 
                 [urlString appendFormat:@"&%@=%@", parameterName, parameters[parameterName]];
             }
             
-            NSURL *url =[NSURL URLWithString:urlString];
+            NSURL *url = [NSURL URLWithString:urlString];
             
             if (url) {
                 NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -67,12 +70,25 @@
                 NSError *webError;
                 NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&webError];
                 
-                NSError *jsonError;
-                NSDictionary *feedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-                
-                if (feedDictionary) {
+                if (responseData) {
+                    NSError *jsonError;
+                    NSDictionary *feedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+                    
+                    if (feedDictionary) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self parseDataFromFeedDictionary:feedDictionary fromRequestWithParameters:parameters];
+                            if (completionHandler) {
+                                completionHandler(nil);
+                            }
+                        });
+                    } else if (completionHandler) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionHandler (jsonError);
+                        });
+                    }
+                } else if (completionHandler) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self parseDataFromFeedDictionary:feedDictionary fromRequestWithParameters:parameters];
+                        completionHandler(webError);
                     });
                 }
             }
@@ -81,29 +97,88 @@
 }
 
 -(void) parseDataFromFeedDictionary:(NSDictionary *) feedDictionary fromRequestWithParameters: (NSDictionary *)parameters {
-    NSLog(@"%@", feedDictionary);
+    NSArray *mediaArray = feedDictionary[@"data"];
+    
+    NSMutableArray *tmpMediaItems = [NSMutableArray array];
+    
+    for (NSDictionary *mediaDictionary in mediaArray) {
+        BLCMedia *mediaItem = [[BLCMedia alloc] initWithDictionary:mediaDictionary];
+        
+        if (mediaItem) {
+            [tmpMediaItems addObject:mediaItem];
+            [self downloadImageForMediaItem:mediaItem];
+        }
+    }
+    
+    NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    
+    if (parameters[@"min_id"]) {
+        NSRange rangeOfIndexes = NSMakeRange(0, tmpMediaItems.count);
+        NSIndexSet *indexSetOfNewObjects = [NSIndexSet indexSetWithIndexesInRange:rangeOfIndexes];
+        
+        [mutableArrayWithKVO insertObjects:tmpMediaItems atIndexes:indexSetOfNewObjects];
+    } else if (parameters[@"max_id"]){
+        
+        if (tmpMediaItems.count == 0) {
+            self.thereAreNoMoreOlderMessages = YES;
+        }
+        [mutableArrayWithKVO addObjectsFromArray:tmpMediaItems];
+    } else{
+        [self willChangeValueForKey:@"mediaItems"];
+        self.mediaItems = tmpMediaItems;
+        [self didChangeValueForKey:@"mediaItmes"];
+    }
 }
+
+- (void) downloadImageForMediaItem:(BLCMedia *)mediaItem {
+    if (mediaItem.mediaURL && !mediaItem.image) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSURLRequest *request = [NSURLRequest requestWithURL:mediaItem.mediaURL];
+            
+            NSURLResponse *response;
+            NSError *error;
+            NSData *imageData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+            
+            if (imageData) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                if (image) {
+                    mediaItem.image = image;
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+                        NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
+                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];
+                    });
+                }
+            } else {
+                NSLog(@"Error downloading image: %@", error);
+            }
+        });
+    }
+}
+
 
 +(NSString *) instagramClientID{
     return @"4b9d4f57194c40d5817d03b996d0ffee";
 }
 
 -(void) requestNewItemWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler{
+    self.thereAreNoMoreOlderMessages = NO;
+    
     if (self.isRefreshing == NO) {
         self.isRefreshing = YES;
-/*        BLCMedia *media = [[BLCMedia alloc]init];
-        media.user = [self randomUser];
-        media.image = [UIImage imageNamed:@"10.jpg"];
-        media.caption = [self randomStringOfLength:7];
         
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO insertObject:media atIndex:0];*/
+        NSString *minID = [[self.mediaItems firstObject] idNumber];
+        NSDictionary *parameters = @{@"min_id": minID};
         
-        self.isRefreshing = NO;
-        
-        if (completionHandler) {
-            completionHandler(nil);
-        }
+        [self populateDataWithParameters:parameters completionHandler:^(NSError *error){
+            self.isRefreshing = NO;
+            
+            if (completionHandler) {
+                completionHandler (error);
+            }
+        }];
     }
 }
 
@@ -155,83 +230,10 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:BLCLoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note){
         self.accessToken = note.object;
         
-        [self populateDataWithParameters:nil];
+        [self populateDataWithParameters:nil completionHandler:nil];
     }];
 }
 
-/*-(void) addRandomData{
-    NSMutableArray *randomMediaItems = [NSMutableArray array];
-    
-    for (int i =1; i <= 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
-        UIImage *image = [UIImage imageNamed:imageName];
-        
-        if (image) {
-            BLCMedia *media = [[BLCMedia alloc]init];
-            media.user = [self randomUser];
-            media.image = image;
-            
-            NSUInteger commentCount = arc4random_uniform(10);
-            NSMutableArray *randomComments = [NSMutableArray array];
-            
-            for (int i = 0; i <= commentCount; i++) {
-                BLCComment *randomComment = [self randomComment];
-                [randomComments addObject:randomComment];
-            }
-            
-            media.comments = randomComments;
-            
-            [randomMediaItems addObject:media];
-        }
-    }
-    self.mediaItems = randomMediaItems;
-    NSLog(@"%@",self.mediaItems);
-}
-
--(BLCUser *) randomUser {
-    BLCUser *user = [[BLCUser alloc] init];
-    
-    user.userName = [self randomStringOfLength:arc4random_uniform(10)];
-    
-    NSString *firstName = [self randomStringOfLength:arc4random_uniform(7)];
-    NSString *lastName = [self randomStringOfLength: arc4random_uniform(12)]    ;
-    user.fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-    
-    return user;
-    
-}
-
--(BLCComment *) randomComment {
-    BLCComment *comment = [[BLCComment alloc] init];
-    
-    comment.from = [self randomUser];
-    
-    NSUInteger wordCount = arc4random_uniform(20);
-    
-    NSMutableString *randomSentence = [[NSMutableString alloc]init];
-    
-    for (int i = 0; i <= wordCount; i++) {
-        NSString *randomWord = [self randomStringOfLength:arc4random_uniform(12)];
-        [randomSentence appendFormat:@"%@ ", randomWord];
-    }
-    
-    comment.text = randomSentence;
-    
-    return comment;
-}
-
--(NSString *) randomStringOfLength:(NSUInteger) len{
-    NSString *alphabet = @"abcdefghijklmnopqrstuvwxyz";
-    
-    NSMutableString *s = [NSMutableString string];
-    for (NSUInteger i = 0U; i < len; i++) {
-        u_int32_t r = arc4random_uniform((u_int32_t)[alphabet length]);
-        unichar c = [alphabet characterAtIndex:r];
-        [s appendFormat:@"%C", c];
-    }
-    
-    return [NSString stringWithString:s];
-}*/
 
 -(void) deleteMediaItem:(BLCMedia *)item{
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
