@@ -54,7 +54,7 @@
     if (self.accessToken) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"http://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
             
             for (NSString *parameterName in parameters) {
                 
