@@ -12,8 +12,6 @@
 	<dict>
 		<key>0DD885F0613114DEE6CC125A7171CDBD85161895</key>
 		<string>https://github.com/manxhong/Blocstagram2.git</string>
-		<key>1BE361F86EDED186B39E3D7CB9B6466113153A64</key>
-		<string>https://github.com/manxhong/Blocstagram.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Blocstagram.xcodeproj</string>
@@ -21,8 +19,6 @@
 	<dict>
 		<key>0DD885F0613114DEE6CC125A7171CDBD85161895</key>
 		<string>../..</string>
-		<key>1BE361F86EDED186B39E3D7CB9B6466113153A64</key>
-		<string>../../../Blocstagram</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/manxhong/Blocstagram2.git</string>
@@ -32,14 +28,6 @@
 	<string>0DD885F0613114DEE6CC125A7171CDBD85161895</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1BE361F86EDED186B39E3D7CB9B6466113153A64</string>
-			<key>IDESourceControlWCCName</key>
-			<string>Blocstagram</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

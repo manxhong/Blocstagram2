@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface BLCUser : NSObject
+@interface BLCUser : NSObject <NSCoding>
 
 -(instancetype) initWithDictionary:(NSDictionary *)userDictionary;
 

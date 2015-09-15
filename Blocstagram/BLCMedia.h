@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 @class BLCUser;
 
-@interface BLCMedia : NSObject
+@interface BLCMedia : NSObject <NSCoding>
 
 -(instancetype) initWithDictionary:(NSDictionary *)mediaDictionary;
 

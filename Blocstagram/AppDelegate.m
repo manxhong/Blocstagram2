@@ -26,22 +26,22 @@
     [BLCDataSource sharedInstance];
     
     UINavigationController *navVC = [[UINavigationController alloc]init];
-    BLCLoginViewController *loginVC = [[BLCLoginViewController alloc]init];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:loginVC action:@selector(navigateWebViewBack:)];
-//    UIButton* test = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [test setTitle:@"Back" forState:UIControlStateNormal];
-//    [navVC.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:test]];
-    //    UITabBarController *tabBarVC = [[UITabBarController alloc]init];
-    navVC.viewControllers = @[loginVC];
-    [navVC setViewControllers:@[loginVC] animated:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:BLCLoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+    if (![BLCDataSource sharedInstance].accessToken) {
+        BLCLoginViewController *loginVC = [[BLCLoginViewController alloc]init];
+        UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:loginVC action:@selector(navigateWebViewBack:)];
+        navVC.viewControllers = @[loginVC];
+        [navVC setViewControllers:@[loginVC] animated:YES];
+        [loginVC.navigationItem setLeftBarButtonItem:leftButton];
+        [[NSNotificationCenter defaultCenter] addObserverForName:BLCLoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            BLCImagesTableViewController *imagesVC = [[BLCImagesTableViewController alloc]init];
+            [navVC setViewControllers:@[imagesVC] animated:YES];
+        }];
+    } else{
         BLCImagesTableViewController *imagesVC = [[BLCImagesTableViewController alloc]init];
-      [navVC setViewControllers:@[imagesVC] animated:YES];
-    }];
+        [navVC setViewControllers:@[imagesVC] animated:YES];
+    }
     
     self.window.rootViewController = navVC;
-    [loginVC.navigationItem setLeftBarButtonItem:leftButton];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
