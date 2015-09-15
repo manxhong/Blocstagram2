@@ -23,7 +23,7 @@
         
         fromViewController.view.userInteractionEnabled = NO;
         
-        [transitionContext.containerView addSubview:toViewController.view];
+        [transitionContext  .containerView addSubview:toViewController.view];
         
         CGRect startFrame = [transitionContext.containerView convertRect:self.cellImageView.bounds fromView:self.cellImageView];
         CGRect endFrame = fromViewController.view.frame;
