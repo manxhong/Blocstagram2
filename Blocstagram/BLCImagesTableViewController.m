@@ -12,12 +12,30 @@
 #import "BLCUser.h"
 #import "BLCComment.h"
 #import "BLCMediaTableViewCell.h"
+#import "BLCMediaFullScreenViewController.h"
+#import "BLCMediaFullScreenAnimator.h"
 
-@interface BLCImagesTableViewController ()
+@interface BLCImagesTableViewController () <BLCMediaTableViewCellDelegate, UIViewControllerTransitioningDelegate>
 
+@property (nonatomic, weak) UIImageView *lastTappedImageView;
 @end
 
 @implementation BLCImagesTableViewController
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+    BLCMediaFullScreenAnimator *animator = [BLCMediaFullScreenAnimator new];
+    animator.presenting = YES;
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
+}
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    BLCMediaFullScreenAnimator *animator = [BLCMediaFullScreenAnimator new];
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
+}
 
 -(id)initWithStyle:(UITableViewStyle)style
 {
@@ -82,6 +100,23 @@
     NSLog(@"we are scrolling");
 }
 
+-(void) cell:(BLCMediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView{
+    NSMutableArray *itemToShare = [NSMutableArray array];
+    
+    if (cell.mediaItem.caption.length > 0) {
+        [itemToShare addObject:cell.mediaItem.caption];
+    }
+    
+    if (cell.mediaItem.image) {
+        [itemToShare addObject:cell.mediaItem.image];
+    }
+    
+    if (itemToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -106,10 +141,23 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     BLCMediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
+    cell.delegate = self;
     cell.mediaItem =[BLCDataSource sharedInstance].mediaItems[indexPath.row];
     return cell;
 }
 
+#pragma mark - BLCMediaTableViewCellDelegate
+
+-(void) cell:(BLCMediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView{
+    self.lastTappedImageView = imageView;
+    
+    BLCMediaFullScreenViewController *fullScreenVC = [[BLCMediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
+    
+    fullScreenVC.transitioningDelegate = self;
+    fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:fullScreenVC animated:YES completion:nil];
+}
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     BLCMedia *item = [BLCDataSource sharedInstance].mediaItems[indexPath.row];
