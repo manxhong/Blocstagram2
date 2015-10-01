@@ -14,6 +14,7 @@
 @property (nonatomic, strong) BLCMedia *media;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
+@property (nonatomic, strong) UITapGestureRecognizer *twoFigersTap;
 @end
 
 @implementation BLCMediaFullScreenViewController
@@ -33,15 +34,28 @@
     [self.scrollView addSubview:self.imageView];
     self.scrollView.contentSize = self.media.image.size;
     
-    self.tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
+    UINavigationBar *navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButton)];
+
+    UINavigationItem *newItem = [UINavigationItem new];
+    newItem.rightBarButtonItem = shareButton;
+    [navbar setItems:@[newItem]];
+
+    
+    self.tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
+
     self.doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapFired:)];
     self.doubleTap.numberOfTapsRequired = 2;
+    
+    self.twoFigersTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFigersTapFired:)];
+    self.twoFigersTap.numberOfTouchesRequired = 2;
     
     [self.tap requireGestureRecognizerToFail:self.doubleTap];
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+    [self.view addSubview:navbar];
     // Do any additional setup after loading the view.
 }
 
@@ -66,6 +80,10 @@
     }else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
+}
+
+-(void) twoFigersTapFired:(UITapGestureRecognizer* )sender {
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -141,6 +159,14 @@
     }
     
     return self;
+}
+
+#pragma mark - share
+
+-(void) shareButton {
+    NSArray *itemToShare = @[self.media.caption, self.media.image];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemToShare applicationActivities:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 @end

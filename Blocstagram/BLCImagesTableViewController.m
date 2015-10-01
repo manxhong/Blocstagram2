@@ -55,20 +55,9 @@
     
     self.refreshControl = [[UIRefreshControl alloc]init];
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
-//    for (int i=1; i <= 10; i++) {
-//        NSString *imageName = [NSString stringWitx    hFormat:@"%d.jpg", i];
-//        UIImage*image = [UIImage imageNamed:imageName];
-//        if (image) {
-//            [self.images addObject:image];
-//        }
-//    }
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.tableView registerClass:[BLCMediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
+    
 }
 
 -(void) refreshControlDidFire:(UIRefreshControl *)sender {
@@ -100,7 +89,7 @@
     NSLog(@"we are scrolling");
 }
 
--(void) cell:(BLCMediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView{
+-(void) cell:(BLCMediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView{
     NSMutableArray *itemToShare = [NSMutableArray array];
     
     if (cell.mediaItem.caption.length > 0) {
@@ -114,8 +103,11 @@
     if (itemToShare.count > 0) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemToShare applicationActivities:nil];
         [self presentViewController:activityVC animated:YES completion:nil];
+
     }
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -148,13 +140,13 @@
 
 #pragma mark - BLCMediaTableViewCellDelegate
 
--(void) cell:(BLCMediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView{
+-(void) cell:(BLCMediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView{
     self.lastTappedImageView = imageView;
     
     BLCMediaFullScreenViewController *fullScreenVC = [[BLCMediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
     
     fullScreenVC.transitioningDelegate = self;
-    fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
+    fullScreenVC.modalPresentationStyle =UIModalPresentationCustom;
     
     [self presentViewController:fullScreenVC animated:YES completion:nil];
 }
@@ -167,30 +159,6 @@
         return 150;
     }
 }
-
-    //    UIImage *image = self.images[indexPath.row];
-//    BLCMedia *item = [self items][indexPath.row];
- //   UIImage *image = item.image;
-  //  return (CGRectGetWidth(self.view.frame)/image.size.width) *image.size.height;
-  //  return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
-//    return [BLCMediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
-
-//-(BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    return YES;
-//}
-
-//
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    
-////    [self.images removeObjectAtIndex:indexPath.row];
-//    NSMutableArray* mutableArray = [self items].mutableCopy;
-//    [mutableArray removeObjectAtIndex:indexPath.row];
-//    [BLCDataSource sharedInstance].mediaItems = (NSArray*) mutableArray;
-//    
-//    [tableView reloadData];
-//}
 
 -(NSArray*) items{
     return [BLCDataSource sharedInstance].mediaItems;

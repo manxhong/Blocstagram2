@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "BLCMediaFullScreenViewController.h"
 @interface ViewController ()
 
 @end
@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    BLCMediaFullScreenViewController *mediaFullScreenVC = [[BLCMediaFullScreenViewController alloc] init];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:mediaFullScreenVC action:nil];
+    [mediaFullScreenVC.navigationItem setRightBarButtonItem:rightButton];
 }
 
 - (void)didReceiveMemoryWarning {

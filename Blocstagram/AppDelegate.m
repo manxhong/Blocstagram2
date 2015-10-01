@@ -10,6 +10,8 @@
 #import "BLCImagesTableViewController.h"
 #import "BLCLoginViewController.h"
 #import "BLCDataSource.h"
+#import "BLCImagesTableViewController.h"
+#import "BLCMediaFullScreenViewController.h"
 
 @interface AppDelegate ()
 
@@ -27,7 +29,9 @@
     
     UINavigationController *navVC = [[UINavigationController alloc]init];
     if (![BLCDataSource sharedInstance].accessToken) {
+        
         BLCLoginViewController *loginVC = [[BLCLoginViewController alloc]init];
+
         UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:loginVC action:@selector(navigateWebViewBack:)];
         navVC.viewControllers = @[loginVC];
         [navVC setViewControllers:@[loginVC] animated:YES];
