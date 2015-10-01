@@ -14,7 +14,6 @@
 @property (nonatomic, strong) BLCMedia *media;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
-@property (nonatomic, strong) UITapGestureRecognizer *twoFigersTap;
 @end
 
 @implementation BLCMediaFullScreenViewController
@@ -48,9 +47,6 @@
     self.doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapFired:)];
     self.doubleTap.numberOfTapsRequired = 2;
     
-    self.twoFigersTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFigersTapFired:)];
-    self.twoFigersTap.numberOfTouchesRequired = 2;
-    
     [self.tap requireGestureRecognizerToFail:self.doubleTap];
     
     [self.scrollView addGestureRecognizer:self.tap];
@@ -82,9 +78,6 @@
     }
 }
 
--(void) twoFigersTapFired:(UITapGestureRecognizer* )sender {
-    
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

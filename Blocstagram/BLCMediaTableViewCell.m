@@ -9,6 +9,7 @@
 #import "BLCMedia.h"
 #import "BLCComment.h"
 #import "BLCUser.h"
+#import <AFNetworking/AFNetworking.h>
 @interface BLCMediaTableViewCell() <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
@@ -18,6 +19,8 @@
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *twoFigersTap;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *instagramOperationManager;
 @end
 
 static UIFont *lightFont;
@@ -137,6 +140,11 @@ static NSParagraphStyle *paragraphStyle;
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapFired:)];
         self.tapGestureRecognizer.delegate = self;
         [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
+    
+        self.twoFigersTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFigersTapFired:)];
+        self.twoFigersTap.numberOfTouchesRequired = 2;
+        [self.mediaImageView addGestureRecognizer:self.twoFigersTap];
+        
         
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
         self.longPressGestureRecognizer.delegate =self;
@@ -183,7 +191,22 @@ static NSParagraphStyle *paragraphStyle;
 
 -(void) longPressFired:(UILongPressGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
-        [self.delegate cell:self didTapImageView:self.mediaImageView];
+        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
+    }
+}
+
+- (void) twoFigersTapFired:(UITapGestureRecognizer *) sender {
+    if (_mediaItem.mediaURL && !_mediaItem.image) {
+        [self.instagramOperationManager GET:_mediaItem.mediaURL.absoluteString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if ([responseObject isKindOfClass:[UIImage class]]) {
+                _mediaItem.image = responseObject;
+                NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+                NSUInteger index = [mutableArrayWithKVO indexOfObject:_mediaItem];
+                [mutableArrayWithKVO replaceObjectAtIndex:index withObject:_mediaItem];
+            }
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error downloading image: %@", error);
+        }];
     }
 }
 @end
