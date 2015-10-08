@@ -9,6 +9,7 @@
 #import "BLCMedia.h"
 #import "BLCComment.h"
 #import "BLCUser.h"
+#import "BLCLikeButton.h"
 #import <AFNetworking/AFNetworking.h>
 @interface BLCMediaTableViewCell() <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *twoFigersTap;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *instagramOperationManager;
+@property (nonatomic, strong) BLCLikeButton *likeButton;
+@property (nonatomic, strong) UILabel *likeCount;
 @end
 
 static UIFont *lightFont;
@@ -34,12 +37,8 @@ static NSParagraphStyle *paragraphStyle;
 
 +(CGFloat) heightForMediaItem:(BLCMedia *)mediaItem width:(CGFloat)width{
     BLCMediaTableViewCell *layoutCell = [[BLCMediaTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"layoutCell"];
-    
-//layoutCell.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
-    
     layoutCell.mediaItem = mediaItem;
     
-//    [layoutCell layoutSubviews];
     layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
     [layoutCell setNeedsLayout];
     [layoutCell layoutIfNeeded];
@@ -53,10 +52,10 @@ static NSParagraphStyle *paragraphStyle;
     linkColor = [UIColor colorWithRed:0.345 green:0.314 blue:0.427 alpha:1];
     
     NSMutableParagraphStyle *mutableParagraphStyle = [[NSMutableParagraphStyle alloc]init];
-    mutableParagraphStyle.headIndent = 20.0;
-    mutableParagraphStyle.firstLineHeadIndent = 20.0;
-    mutableParagraphStyle.tailIndent = -20.0;
-    mutableParagraphStyle.paragraphSpacingBefore = 5;
+    mutableParagraphStyle.headIndent = 2.0;
+    mutableParagraphStyle.firstLineHeadIndent = 2.0;
+    mutableParagraphStyle.tailIndent = -2.0;
+    mutableParagraphStyle.paragraphSpacingBefore = 2;
     
     paragraphStyle = mutableParagraphStyle;
     
@@ -64,7 +63,7 @@ static NSParagraphStyle *paragraphStyle;
 
 -(NSAttributedString*) usernameAndCaptionString {
     
-    CGFloat usernameFontSize = 15;
+    CGFloat usernameFontSize = 8;
     
     NSString *baseString = [NSString stringWithFormat:@"%@ %@", self.mediaItem.user.userName, self.mediaItem.caption];
     
@@ -118,6 +117,10 @@ static NSParagraphStyle *paragraphStyle;
     self.mediaImageView.image = _mediaItem.image;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
+    self.likeButton.likeButtonState = mediaItem.likeState;
+    
+    self.likeCount.text = [NSString stringWithFormat:@"%@", mediaItem.likeCount];
+    
 }
 
 
@@ -149,18 +152,28 @@ static NSParagraphStyle *paragraphStyle;
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
         self.longPressGestureRecognizer.delegate =self;
         [self.mediaImageView addGestureRecognizer:self.longPressGestureRecognizer];
+        
         self.usernameAndCaptionLabel = [[UILabel alloc]init];
+        self.usernameAndCaptionLabel.numberOfLines = 0;
         self.commentLabel = [[UILabel alloc]init];
         self.commentLabel.numberOfLines = 0;
-            
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel]) {
+        self.commentLabel.backgroundColor = commentLabelGray;
+        
+        self.likeButton = [[BLCLikeButton alloc] init];
+        [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
+        self.likeButton.backgroundColor = usernameLabelGray;
+        
+        self.likeCount = [[UILabel alloc] init];
+        self.likeCount.numberOfLines = 0;
+        [self.likeCount setFont:[UIFont systemFontOfSize:10]];
+        
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likeCount]) {
             [self.contentView addSubview:view];
             view.translatesAutoresizingMaskIntoConstraints = NO;
         }
-        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel);
-        
+        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likeCount);
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likeCount(==12)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mediaImageView][_usernameAndCaptionLabel][_commentLabel]" options:kNilOptions metrics:nil views:viewDictionary]];
         
@@ -208,5 +221,18 @@ static NSParagraphStyle *paragraphStyle;
             NSLog(@"Error downloading image: %@", error);
         }];
     }
+}
+
+#pragma mark - Liking
+-(void) likePressed:(UIButton *)sender{
+    
+    NSInteger amount = [self.mediaItem.likeCount integerValue];
+    if (self.mediaItem.likeState == BLCLikeStateLiked) {
+        amount++;
+    } else if (self.mediaItem.likeState == BLCLikeStateNotLiked) {
+        amount--;
+    }
+    self.mediaItem.likeCount = [NSNumber numberWithInteger:amount];
+    [self.delegate cellDidPressLikeButton:self];
 }
 @end

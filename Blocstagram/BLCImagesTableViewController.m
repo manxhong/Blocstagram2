@@ -253,4 +253,9 @@
         [[BLCDataSource sharedInstance] deleteMediaItem:item];
     }
 }
+
+-(void) cellDidPressLikeButton:(BLCMediaTableViewCell *)cell {
+    [[BLCDataSource sharedInstance] toggleLikeOnMediaItem:cell.mediaItem];
+}
+
 @end

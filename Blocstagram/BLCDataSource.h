@@ -24,4 +24,5 @@ typedef void (^BLCNewItemCompletionBlcok)(NSError *error);
 -(void) requestOldItemsWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler;
 -(void) downloadImageForMediaItem: (BLCMedia *)mediaItem;
 
+-(void) toggleLikeOnMediaItem: (BLCMedia *)mediaItem;
 @end
