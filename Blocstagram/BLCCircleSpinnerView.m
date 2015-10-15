@@ -19,7 +19,7 @@
 
 -(CAShapeLayer *)circleLayer {
     if (!_circleLayer) {
-        CGPoint arcCenter = CGPointMake(self.radius+self.strokeThickness, self.radius+self.strokeThickness/2+5);
+        CGPoint arcCenter = CGPointMake(self.radius+self.strokeThickness/2+5, self.radius+self.strokeThickness/2+5);
         CGRect rect = CGRectMake(0, 0, arcCenter.x*2, arcCenter.y*2);
         
         UIBezierPath* smoothedPath = [UIBezierPath bezierPathWithArcCenter:arcCenter radius:self.radius startAngle:M_PI*3/2 endAngle:M_PI/2+M_PI*5 clockwise:YES];

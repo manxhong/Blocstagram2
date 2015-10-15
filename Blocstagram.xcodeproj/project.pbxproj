@@ -23,6 +23,10 @@
 		1C87F9661BA89DA60018C7CB /* BLCMediaFullScreenAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9651BA89DA60018C7CB /* BLCMediaFullScreenAnimator.m */; };
 		1C87F9691BBF197C0018C7CB /* BLCCircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9681BBF197C0018C7CB /* BLCCircleSpinnerView.m */; };
 		1C87F96C1BBF33390018C7CB /* BLCLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F96B1BBF33390018C7CB /* BLCLikeButton.m */; };
+		1C87F96F1BC602A40018C7CB /* BLCComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F96E1BC602A40018C7CB /* BLCComposeCommentView.m */; };
+		1C87F9751BD00E460018C7CB /* BLCCameraToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9741BD00E460018C7CB /* BLCCameraToolbar.m */; };
+		1C87F9781BD0478A0018C7CB /* BLCCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9771BD0478A0018C7CB /* BLCCameraViewController.m */; };
+		1C87F97B1BD049A50018C7CB /* BLCImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */; };
 		1CBC50601A79D1EB0050DCA1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC505F1A79D1EB0050DCA1 /* main.m */; };
 		1CBC50631A79D1EB0050DCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC50621A79D1EB0050DCA1 /* AppDelegate.m */; };
 		1CBC50661A79D1EB0050DCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC50651A79D1EB0050DCA1 /* ViewController.m */; };
@@ -70,6 +74,14 @@
 		1C87F9681BBF197C0018C7CB /* BLCCircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCCircleSpinnerView.m; sourceTree = "<group>"; };
 		1C87F96A1BBF33390018C7CB /* BLCLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCLikeButton.h; sourceTree = "<group>"; };
 		1C87F96B1BBF33390018C7CB /* BLCLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCLikeButton.m; sourceTree = "<group>"; };
+		1C87F96D1BC602A40018C7CB /* BLCComposeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCComposeCommentView.h; sourceTree = "<group>"; };
+		1C87F96E1BC602A40018C7CB /* BLCComposeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCComposeCommentView.m; sourceTree = "<group>"; };
+		1C87F9731BD00E460018C7CB /* BLCCameraToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCCameraToolbar.h; sourceTree = "<group>"; };
+		1C87F9741BD00E460018C7CB /* BLCCameraToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCCameraToolbar.m; sourceTree = "<group>"; };
+		1C87F9761BD0478A0018C7CB /* BLCCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCCameraViewController.h; sourceTree = "<group>"; };
+		1C87F9771BD0478A0018C7CB /* BLCCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCCameraViewController.m; sourceTree = "<group>"; };
+		1C87F9791BD049A50018C7CB /* BLCImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCImageUtilities.h; sourceTree = "<group>"; };
+		1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCImageUtilities.m; sourceTree = "<group>"; };
 		1CBC505A1A79D1EB0050DCA1 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CBC505E1A79D1EB0050DCA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CBC505F1A79D1EB0050DCA1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -174,6 +186,8 @@
 				1C3535E91B8E4DC50074B2C0 /* BLCLoginViewController.m */,
 				1C6DE8A11A8077540070A936 /* BLCMediaTableViewCell.h */,
 				1C6DE8A21A8077540070A936 /* BLCMediaTableViewCell.m */,
+				1C87F96D1BC602A40018C7CB /* BLCComposeCommentView.h */,
+				1C87F96E1BC602A40018C7CB /* BLCComposeCommentView.m */,
 				1C87F9671BBF197C0018C7CB /* BLCCircleSpinnerView.h */,
 				1C87F9681BBF197C0018C7CB /* BLCCircleSpinnerView.m */,
 				1C87F96A1BBF33390018C7CB /* BLCLikeButton.h */,
@@ -182,6 +196,12 @@
 				1C87F95F1BA897420018C7CB /* BLCMediaFullScreenViewController.m */,
 				1C87F9641BA89DA60018C7CB /* BLCMediaFullScreenAnimator.h */,
 				1C87F9651BA89DA60018C7CB /* BLCMediaFullScreenAnimator.m */,
+				1C87F9731BD00E460018C7CB /* BLCCameraToolbar.h */,
+				1C87F9741BD00E460018C7CB /* BLCCameraToolbar.m */,
+				1C87F9761BD0478A0018C7CB /* BLCCameraViewController.h */,
+				1C87F9771BD0478A0018C7CB /* BLCCameraViewController.m */,
+				1C87F9791BD049A50018C7CB /* BLCImageUtilities.h */,
+				1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */,
 				1CBC50641A79D1EB0050DCA1 /* ViewController.h */,
 				1CBC50651A79D1EB0050DCA1 /* ViewController.m */,
 				1CBC506A1A79D1EB0050DCA1 /* Images.xcassets */,
@@ -388,10 +408,14 @@
 				1C87F9661BA89DA60018C7CB /* BLCMediaFullScreenAnimator.m in Sources */,
 				1CBC509A1A7A0B2D0050DCA1 /* BLCImagesTableViewController.m in Sources */,
 				1CBC509D1A7A89020050DCA1 /* BLCUser.m in Sources */,
+				1C87F97B1BD049A50018C7CB /* BLCImageUtilities.m in Sources */,
+				1C87F9751BD00E460018C7CB /* BLCCameraToolbar.m in Sources */,
 				1CBC50A61A7A8C150050DCA1 /* BLCDataSource.m in Sources */,
 				1C3535EA1B8E4DC50074B2C0 /* BLCLoginViewController.m in Sources */,
 				1C87F9691BBF197C0018C7CB /* BLCCircleSpinnerView.m in Sources */,
 				1CBC50A31A7A8B630050DCA1 /* BLCComment.m in Sources */,
+				1C87F96F1BC602A40018C7CB /* BLCComposeCommentView.m in Sources */,
+				1C87F9781BD0478A0018C7CB /* BLCCameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

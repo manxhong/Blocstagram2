@@ -51,13 +51,13 @@
     switch (_likeButtonState) {
         case BLCLikeStateLiked:
         case BLCLikeStateUnliking:
-            imageName = kLikedStateImage;
+            imageName =kLikedStateImage;
             break;
         
             
         case BLCLikeStateNotLiked:
         case BLCLikeStateLiking:
-            imageName = kUnlikedStateImage;
+            imageName =kUnlikedStateImage;
     }
     
     switch (_likeButtonState) {
@@ -73,7 +73,6 @@
             self.userInteractionEnabled = YES;
 
     }
-    
     
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
