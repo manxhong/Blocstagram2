@@ -287,6 +287,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+//-(UIImage *)imageByScalingToSize:(CGSize)size andCroppingWithRect:(CGRect)rect {
+//}
+
 /*
 #pragma mark - Navigation
 

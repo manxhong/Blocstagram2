@@ -18,6 +18,8 @@
 
 @interface BLCCameraViewController : UIViewController
 
-
 @property (nonatomic, weak) NSObject <BLCCameraViewControllerDelegate> *delegate;
+
+- (UIImage *) imageByScalingToSize:(CGSize)size andCroppingWithRect:(CGRect)rect;
+
 @end

@@ -75,8 +75,6 @@
     
 }
 
-#pragma mark - Camera and BLCCameraViewControllerDelegate
-
 - (void) cameraPressed:(UIBarButtonItem *) sender {
     BLCCameraViewController *cameraVC = [[BLCCameraViewController alloc] init];
     cameraVC.delegate = self;
@@ -85,7 +83,7 @@
     return;
 }
 
-- (void) cameraViewController:(BLCCameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
+-(void) cameraViewController:(BLCCameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
     [cameraViewController dismissViewControllerAnimated:YES completion:^{
         if (image) {
             NSLog(@"Got an image!");
@@ -93,6 +91,7 @@
             NSLog(@"Closed without an image.");
         }
     }];
+    
 }
 
 -(void) refreshControlDidFire:(UIRefreshControl *)sender {
@@ -221,9 +220,9 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     BLCMedia *item = [BLCDataSource sharedInstance].mediaItems[indexPath.row];
     if (item.image) {
-        return 550;
+        return 950;
     } else {
-        return 450;
+        return 850;
     }
 }
 
