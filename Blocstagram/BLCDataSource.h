@@ -12,6 +12,8 @@
 typedef void (^BLCNewItemCompletionBlcok)(NSError *error);
 @interface BLCDataSource : NSObject
 
+extern NSString *const BLCImageFinishedNotification;
+
 +(NSString *) instagramClientID;
 +(instancetype) sharedInstance;
 @property (nonatomic, strong, readonly) NSArray *mediaItems;

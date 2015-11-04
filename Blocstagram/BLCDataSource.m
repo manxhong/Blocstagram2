@@ -36,6 +36,8 @@
 @implementation BLCDataSource
 #pragma - Key/Value Observing
 
+NSString * const BLCImageFinishedNotification = @"BLCImageFinishedNotification";
+
 -(void) requestOldItemsWithCompletionHandler:(BLCNewItemCompletionBlcok)completionHandler {
     if (self.isLoadingOlderItems == NO && self.thereAreNoMoreOlderMessages ==NO) {
         self.isLoadingOlderItems = YES;
