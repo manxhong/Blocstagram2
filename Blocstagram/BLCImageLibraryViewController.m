@@ -64,8 +64,12 @@
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
     flowLayout.itemSize = CGSizeMake(cellSize, cellSize);
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.headerReferenceSize = CGSizeMake(width, 30);
+    flowLayout.minimumLineSpacing = 1;
+    flowLayout.headerReferenceSize = CGSizeMake(width, 20);
+}
+
+-(CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(120, 120);
 }
 
 -(void) viewWillAppear:(BOOL)animated {

@@ -181,6 +181,26 @@
     CIImage *sourceCIImage = [CIImage imageWithCGImage:self.sourceImage.CGImage];
     
     [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *CILinearToSRGBToneCurve= [CIFilter filterWithName:@"CILinearToSRGBToneCurve"];
+        if (CILinearToSRGBToneCurve) {
+            [CILinearToSRGBToneCurve setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:CILinearToSRGBToneCurve.outputImage withFilterTitle:NSLocalizedString(@"SRGBTone", @"CILinearToSRGBToneCurve Filter")];
+        }
+    }];
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *CILinearToSRGBToneCurve= [CIFilter filterWithName:@"CILinearToSRGBToneCurve"];
+        CIFilter *CIGaussianBlur = [CIFilter filterWithName:@"CIGaussianBlur"];
+        if (CILinearToSRGBToneCurve && CIGaussianBlur) {
+            [CILinearToSRGBToneCurve setValue:sourceCIImage forKey:kCIInputImageKey];
+            CIImage *SRGBToneCurveImage = CILinearToSRGBToneCurve.outputImage;
+            [CIGaussianBlur setValue:SRGBToneCurveImage forKey:kCIInputImageKey];
+            CIImage *SRGBToneCurveAndGaussianBlurImage = CIGaussianBlur.outputImage;
+            [self addCIImageToCollectionView:SRGBToneCurveAndGaussianBlurImage withFilterTitle:NSLocalizedString(@"ToneCurveBlur", @"SRGBToneCurveAndGaussianBlur Filter")];
+        }
+    }];
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
         CIFilter *noirFilter = [CIFilter filterWithName:@"CIPhotoEffectNoir"];
         
         if (noirFilter) {
