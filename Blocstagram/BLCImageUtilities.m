@@ -141,4 +141,9 @@
     return image;
 }
 
+- (UIImage *) imageByScalingToSize:(CGSize)size andCroppingWithRect:(CGRect)rect {
+    UIImage *newImage = [self imageResizedToMatchAspectRatioOfSize:size];
+    newImage = [newImage imageCroppedToRect:rect];
+    return [newImage imageWithFixedOrientation];
+}
 @end
