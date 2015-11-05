@@ -24,6 +24,7 @@
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
 @property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
 @property (nonatomic, strong) UIPopoverController *cameraPopover;
+@property (nonatomic, strong) UIPopoverController *sharePopover;
 @end
 
 @implementation BLCImagesTableViewController
@@ -178,18 +179,34 @@
     if (cell.mediaItem.caption.length > 0) {
         [itemToShare addObject:cell.mediaItem.caption];
     }
-    
+
     if (cell.mediaItem.image) {
         [itemToShare addObject:cell.mediaItem.image];
     }
-    
     if (itemToShare.count > 0) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemToShare applicationActivities:nil];
-        [self presentViewController:activityVC animated:YES completion:nil];
+         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemToShare applicationActivities:nil];
+        
+        if (isPhone) {
+            [self presentViewController:activityVC animated:YES completion:nil];
+        } else {
+            self.sharePopover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+            self.sharePopover.popoverContentSize = CGSizeMake(320, 568);
+            [self.sharePopover presentPopoverFromRect:imageView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+//            UIPopoverController* popover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+//            self.popover.delegate = self;
+//
+        }
 
     }
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -28,6 +28,7 @@
 		1C87F9781BD0478A0018C7CB /* BLCCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9771BD0478A0018C7CB /* BLCCameraViewController.m */; };
 		1C87F97B1BD049A50018C7CB /* BLCImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */; };
 		1C87F9811BD993F40018C7CB /* BLCCropBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C87F9801BD993F40018C7CB /* BLCCropBox.m */; };
+		1C8995AE1BEA747600AEE715 /* BLCInstagramCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8995AD1BEA747600AEE715 /* BLCInstagramCollectionViewCell.m */; };
 		1C9A7F7F1BDD512000C40FAF /* BLCCropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A7F7E1BDD512000C40FAF /* BLCCropImageViewController.m */; };
 		1C9A7F821BDD5CAE00C40FAF /* BLCImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A7F811BDD5CAE00C40FAF /* BLCImageLibraryViewController.m */; };
 		1C9A7F851BE1FF1000C40FAF /* BLCPostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A7F841BE1FF1000C40FAF /* BLCPostToInstagramViewController.m */; };
@@ -88,6 +89,8 @@
 		1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCImageUtilities.m; sourceTree = "<group>"; };
 		1C87F97F1BD993F40018C7CB /* BLCCropBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCCropBox.h; sourceTree = "<group>"; };
 		1C87F9801BD993F40018C7CB /* BLCCropBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCCropBox.m; sourceTree = "<group>"; };
+		1C8995AC1BEA747600AEE715 /* BLCInstagramCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCInstagramCollectionViewCell.h; sourceTree = "<group>"; };
+		1C8995AD1BEA747600AEE715 /* BLCInstagramCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCInstagramCollectionViewCell.m; sourceTree = "<group>"; };
 		1C9A7F7D1BDD512000C40FAF /* BLCCropImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCCropImageViewController.h; sourceTree = "<group>"; };
 		1C9A7F7E1BDD512000C40FAF /* BLCCropImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCCropImageViewController.m; sourceTree = "<group>"; };
 		1C9A7F801BDD5CAE00C40FAF /* BLCImageLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCImageLibraryViewController.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				1CBC50991A7A0B2D0050DCA1 /* BLCImagesTableViewController.m */,
 				1C9A7F831BE1FF0F00C40FAF /* BLCPostToInstagramViewController.h */,
 				1C9A7F841BE1FF1000C40FAF /* BLCPostToInstagramViewController.m */,
+				1C8995AC1BEA747600AEE715 /* BLCInstagramCollectionViewCell.h */,
+				1C8995AD1BEA747600AEE715 /* BLCInstagramCollectionViewCell.m */,
 				1C87F96D1BC602A40018C7CB /* BLCComposeCommentView.h */,
 				1C87F96E1BC602A40018C7CB /* BLCComposeCommentView.m */,
 				1CBC50641A79D1EB0050DCA1 /* ViewController.h */,
@@ -450,6 +455,7 @@
 				1C87F9601BA897420018C7CB /* BLCMediaFullScreenViewController.m in Sources */,
 				1CBC50631A79D1EB0050DCA1 /* AppDelegate.m in Sources */,
 				1C87F9811BD993F40018C7CB /* BLCCropBox.m in Sources */,
+				1C8995AE1BEA747600AEE715 /* BLCInstagramCollectionViewCell.m in Sources */,
 				1C6DE8A31A8077540070A936 /* BLCMediaTableViewCell.m in Sources */,
 				1CBC50A01A7A8A2F0050DCA1 /* BLCMedia.m in Sources */,
 				1CBC50601A79D1EB0050DCA1 /* main.m in Sources */,
@@ -582,6 +588,8 @@
 			baseConfigurationReference = 4752FECC13B34CE8608CF2D5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Blocstagram/Blocstagram-Prefix.pch";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -593,6 +601,8 @@
 			baseConfigurationReference = B9B9F69D0A7C13F21DD6E90F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Blocstagram/Blocstagram-Prefix.pch";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

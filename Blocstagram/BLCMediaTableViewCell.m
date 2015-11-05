@@ -64,11 +64,13 @@ static NSParagraphStyle *paragraphStyle;
 }
 
 - (void) createConstraints{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if (isPhone) {
         [self createPhoneConstraints];
     } else {
         [self createPadConstraints];
     }
+    
+    [self createCommonConstraints];
 }
 
 -(void) createPadConstraints {
@@ -146,7 +148,7 @@ static NSParagraphStyle *paragraphStyle;
     self.commentLabelHeightConstraint.constant = commentLabelSize.height +20;
     self.separatorInset= UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.bounds));
     if (_mediaItem.image) {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (isPhone) {
             self.imageHeightConstraint.constant = self.mediaItem.image.size.height/self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
         }else{
             self.imageHeightConstraint.constant = 320;
