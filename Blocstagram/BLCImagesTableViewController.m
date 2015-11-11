@@ -100,7 +100,7 @@
     if (imageVC) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (isPhone) {
             [self presentViewController:nav animated:YES completion:nil];
         } else {
             self.cameraPopover = [[UIPopoverController alloc] initWithContentViewController:nav];
@@ -191,7 +191,7 @@
         } else {
             self.sharePopover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
             self.sharePopover.popoverContentSize = CGSizeMake(320, 568);
-            [self.sharePopover presentPopoverFromRect:imageView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+            [self.sharePopover presentPopoverFromRect:imageView.frame inView:imageView.superview permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 //            UIPopoverController* popover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
 //            self.popover.delegate = self;
 //
@@ -200,12 +200,18 @@
     }
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-}
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         // do whatever
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 
@@ -437,7 +443,7 @@
         
         [nav pushViewController:postVC animated:YES];
     } else {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (isPhone) {
          [nav dismissViewControllerAnimated:YES completion:nil];
         } else {
             [self.cameraPopover dismissPopoverAnimated:YES];

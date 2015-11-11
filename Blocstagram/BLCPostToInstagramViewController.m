@@ -71,6 +71,8 @@
 -(void) viewDidLoad {
     [super viewDidLoad];
     
+    [self.filterCollectionView registerClass:[BLCInstagramCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    
     [self.view addSubview:self.previewImageView];
     [self.view addSubview:self.filterCollectionView];
     
@@ -80,7 +82,7 @@
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
     
-    [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    //[self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.filterCollectionView.backgroundColor = [UIColor whiteColor];
@@ -126,7 +128,7 @@
 }
 
 -(UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    BLCInstagramCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    BLCInstagramCollectionViewCell *cell = (BLCInstagramCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
     CGFloat thumbnailEdgeSize = flowLayout.itemSize.width;
