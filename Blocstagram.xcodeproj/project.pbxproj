@@ -43,7 +43,11 @@
 		1CBC50A01A7A8A2F0050DCA1 /* BLCMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC509F1A7A8A2F0050DCA1 /* BLCMedia.m */; };
 		1CBC50A31A7A8B630050DCA1 /* BLCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC50A21A7A8B630050DCA1 /* BLCComment.m */; };
 		1CBC50A61A7A8C150050DCA1 /* BLCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC50A51A7A8C150050DCA1 /* BLCDataSource.m */; };
-		3561CE862E1554F9F5A5494F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51697B78B1C8FA9233F48CA2 /* libPods.a */; };
+		1CE251691BF427450035F223 /* BLCUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE251681BF427450035F223 /* BLCUserTests.m */; };
+		1CE2516C1BF44B140035F223 /* Flurry-iOS-7.3.0 in Resources */ = {isa = PBXBuildFile; fileRef = 1CE2516B1BF44B140035F223 /* Flurry-iOS-7.3.0 */; };
+		1CE251891BF45D520035F223 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE251871BF45D520035F223 /* Fabric.framework */; };
+		1CE2518A1BF45D520035F223 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE251881BF45D520035F223 /* Crashlytics.framework */; };
+		F7BE48C2F01124C770A7D1B4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51697B78B1C8FA9233F48CA2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +124,17 @@
 		1CBC50A21A7A8B630050DCA1 /* BLCComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCComment.m; sourceTree = "<group>"; };
 		1CBC50A41A7A8C150050DCA1 /* BLCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCDataSource.h; sourceTree = "<group>"; };
 		1CBC50A51A7A8C150050DCA1 /* BLCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCDataSource.m; sourceTree = "<group>"; };
+		1CE251681BF427450035F223 /* BLCUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCUserTests.m; sourceTree = "<group>"; };
+		1CE2516B1BF44B140035F223 /* Flurry-iOS-7.3.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Flurry-iOS-7.3.0"; path = "Blocstagram/Flurry-iOS-7.3.0"; sourceTree = "<group>"; };
+		1CE2516D1BF44F9B0035F223 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		1CE2516F1BF457DF0035F223 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1CE251711BF458680035F223 /* AFNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AFNetworking; path = Pods/AFNetworking/AFNetworking; sourceTree = "<group>"; };
+		1CE251731BF45A5E0035F223 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		1CE251751BF45A750035F223 /* libFlurry-iOS-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libFlurry-iOS-SDK.a"; path = "Pods/../build/Debug-iphoneos/libFlurry-iOS-SDK.a"; sourceTree = "<group>"; };
+		1CE251771BF45A7A0035F223 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
+		1CE251781BF45A7A0035F223 /* libUICKeyChainStore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUICKeyChainStore.a; path = "Pods/../build/Debug-iphoneos/libUICKeyChainStore.a"; sourceTree = "<group>"; };
+		1CE251871BF45D520035F223 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		1CE251881BF45D520035F223 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4752FECC13B34CE8608CF2D5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		51697B78B1C8FA9233F48CA2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B9F69D0A7C13F21DD6E90F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,7 +145,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3561CE862E1554F9F5A5494F /* libPods.a in Frameworks */,
+				F7BE48C2F01124C770A7D1B4 /* libPods.a in Frameworks */,
+				1CE2518A1BF45D520035F223 /* Crashlytics.framework in Frameworks */,
+				1CE251891BF45D520035F223 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				1CBC505C1A79D1EB0050DCA1 /* Blocstagram */,
+				1CE2516B1BF44B140035F223 /* Flurry-iOS-7.3.0 */,
 				1CBC50761A79D1EB0050DCA1 /* BlocstagramTests */,
 				1CBC505B1A79D1EB0050DCA1 /* Products */,
 				78BD55F7CFEAA7FC35290728 /* Pods */,
@@ -255,6 +273,7 @@
 				1C87F9741BD00E460018C7CB /* BLCCameraToolbar.m */,
 				1C87F9791BD049A50018C7CB /* BLCImageUtilities.h */,
 				1C87F97A1BD049A50018C7CB /* BLCImageUtilities.m */,
+				1CE2516D1BF44F9B0035F223 /* Flurry.h */,
 				1CBC506A1A79D1EB0050DCA1 /* Images.xcassets */,
 				1CBC506C1A79D1EB0050DCA1 /* LaunchScreen.xib */,
 				1CBC505D1A79D1EB0050DCA1 /* Supporting Files */,
@@ -275,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				1CBC50791A79D1EB0050DCA1 /* BlocstagramTests.m */,
+				1CE251681BF427450035F223 /* BLCUserTests.m */,
 				1CBC50771A79D1EB0050DCA1 /* Supporting Files */,
 			);
 			path = BlocstagramTests;
@@ -300,6 +320,14 @@
 		85A2757ACE8F6BA4FFCEE9C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CE251871BF45D520035F223 /* Fabric.framework */,
+				1CE251881BF45D520035F223 /* Crashlytics.framework */,
+				1CE251771BF45A7A0035F223 /* libAFNetworking.a */,
+				1CE251781BF45A7A0035F223 /* libUICKeyChainStore.a */,
+				1CE251751BF45A750035F223 /* libFlurry-iOS-SDK.a */,
+				1CE251731BF45A5E0035F223 /* libPods.a */,
+				1CE251711BF458680035F223 /* AFNetworking */,
+				1CE2516F1BF457DF0035F223 /* UIKit.framework */,
 				51697B78B1C8FA9233F48CA2 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -317,6 +345,7 @@
 				1CBC50571A79D1EB0050DCA1 /* Frameworks */,
 				1CBC50581A79D1EB0050DCA1 /* Resources */,
 				3824440F190994F624AF46FD /* Copy Pods Resources */,
+				1CE2516E1BF453850035F223 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -392,6 +421,7 @@
 				1C6DE8971A8061EE0070A936 /* 1.jpg in Resources */,
 				1C6DE89C1A8061EE0070A936 /* 5.jpg in Resources */,
 				1C6DE89B1A8061EE0070A936 /* 4.jpg in Resources */,
+				1CE2516C1BF44B140035F223 /* Flurry-iOS-7.3.0 in Resources */,
 				1CBC506E1A79D1EB0050DCA1 /* LaunchScreen.xib in Resources */,
 				1C6DE8991A8061EE0070A936 /* 2.jpg in Resources */,
 				1C6DE89A1A8061EE0070A936 /* 3.jpg in Resources */,
@@ -412,6 +442,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1CE2516E1BF453850035F223 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 8e4a280138fed76d2e325f73791493d3cb47e7e4 22ba59359014ee0301dbe7ad9e7735a4bd47bdd54eb804fba80eeef132254503";
+		};
 		3824440F190994F624AF46FD /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CE251691BF427450035F223 /* BLCUserTests.m in Sources */,
 				1CBC507A1A79D1EB0050DCA1 /* BlocstagramTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,10 +633,18 @@
 			baseConfigurationReference = 4752FECC13B34CE8608CF2D5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Blocstagram/Blocstagram-Prefix.pch";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -601,10 +654,18 @@
 			baseConfigurationReference = B9B9F69D0A7C13F21DD6E90F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Blocstagram/Blocstagram-Prefix.pch";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

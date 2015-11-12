@@ -25,6 +25,7 @@
 @property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
 @property (nonatomic, strong) UIPopoverController *cameraPopover;
 @property (nonatomic, strong) UIPopoverController *sharePopover;
+@property (nonatomic, strong) UIImageView *currentPopoverImageView;
 @end
 
 @implementation BLCImagesTableViewController
@@ -131,15 +132,16 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
     if (indexPath) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:animated];
     }
 }
 
--(void) viewWillDisappear:(BOOL)animated{
-    
-}
+//-(void) viewWillDisappear:(BOOL)animated{
+//    
+//}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     BLCMediaTableViewCell *cell = (BLCMediaTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -192,6 +194,7 @@
             self.sharePopover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
             self.sharePopover.popoverContentSize = CGSizeMake(320, 568);
             [self.sharePopover presentPopoverFromRect:imageView.frame inView:imageView.superview permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+            self.currentPopoverImageView = imageView;
 //            UIPopoverController* popover = [[UIPopoverController alloc] initWithContentViewController:activityVC];
 //            self.popover.delegate = self;
 //
@@ -204,9 +207,10 @@
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-         // do whatever
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+         if (self.sharePopover.popoverVisible) {
+             [self.sharePopover dismissPopoverAnimated:YES];
+             [self.sharePopover presentPopoverFromRect:self.currentPopoverImageView.frame inView:self.currentPopoverImageView.superview permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+         }     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          
      }];

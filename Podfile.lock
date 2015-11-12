@@ -20,14 +20,17 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Flurry-iOS-SDK/FlurrySDK (7.1.0)
   - UICKeyChainStore (2.0.6)
 
 DEPENDENCIES:
   - AFNetworking
+  - Flurry-iOS-SDK/FlurrySDK (= 7.1.0)
   - UICKeyChainStore
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  Flurry-iOS-SDK: 7b3fe6c3344c82b73c4c84163652eada84fbfcf4
   UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
 
 COCOAPODS: 0.38.2

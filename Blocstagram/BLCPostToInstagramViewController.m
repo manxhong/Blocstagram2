@@ -9,6 +9,7 @@
 #import "BLCPostToInstagramViewController.h"
 #import "BLCDataSource.h"
 #import "BLCInstagramCollectionViewCell.h"
+#import "Flurry.h"
 
 
 @interface BLCPostToInstagramViewController () <UICollectionViewDataSource, UIAlertViewDelegate, UIDocumentInteractionControllerDelegate>
@@ -297,6 +298,9 @@
             [self addCIImageToCollectionView:composite.outputImage withFilterTitle:NSLocalizedString(@"Film", @"Film Filter")];
         }
     }];
+    
+    NSDictionary *params = @{@"Filter" : @"Noir"};
+    [Flurry logEvent:@"Sent Photo to Instagram App" withParameters:params];
 }
 
 #pragma mark - Buttons

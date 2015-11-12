@@ -12,6 +12,9 @@
 #import "BLCDataSource.h"
 #import "BLCImagesTableViewController.h"
 #import "BLCMediaFullScreenViewController.h"
+#import "Flurry.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 
@@ -21,6 +24,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [Fabric with:@[[Crashlytics class]]];
+    [Flurry startSession:@"WHH3JMNB3Q95B68B8SDM"];
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[BLCImagesTableViewController alloc]init]];
